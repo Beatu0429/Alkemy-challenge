@@ -1,8 +1,16 @@
 package com.alkemy.challengebackend.model.dto;
 
-import java.util.List;
+import lombok.*;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PersonajeListDto {
+
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String imagen;
     private String nombre;
