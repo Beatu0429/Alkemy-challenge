@@ -15,6 +15,8 @@ public interface IPeliculaOSerieService {
 
     public void deletePeliculaOSerie(Long id);
 
-    public List<PeliculaOSerieListDto> listPeliculaOSerie();
+    public List<PeliculaOSerieListDto> listPeliculaOSerie(String name,
+                                                          Long genreId,
+                                                          String order);
 
 }

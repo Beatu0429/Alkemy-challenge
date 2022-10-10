@@ -19,5 +19,5 @@ public class PersonajeDto {
     private Integer edad;
     private double peso;
     private String historia;
-    private List<PeliculaOSerieDto> peliculasOSeries;
+    private List<PeliculaOSerieListDto> peliculasOSeries;
 }
