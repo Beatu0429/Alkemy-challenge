@@ -77,8 +77,22 @@ public class PersonajeServiceImpl implements IPersonajeService {
     }
 
     @Override
-    public List<PersonajeListDto> findByNombrePersonaje(String nombre) {
-        List<Personaje> personajes = personajeRepository.findByNombre(nombre);
+    public List<PersonajeListDto> filtrarPersonajes(String nombre, Integer edad,
+                                                    Double peso, Long id) {
+        List<Personaje> personajes = new ArrayList<>();
+        if(nombre != null){
+            personajes = personajeRepository.findByNombre(nombre);
+        }
+        if (edad != null){
+            personajes = personajeRepository.findByEdad(edad);
+        }
+        if (peso != null){
+            personajes = personajeRepository.findByPeso(peso);
+        }
+        if (id != null){
+            personajes = personajeRepository.findByPeliculasOSeries(id);
+        }
+
         List<PersonajeListDto> personajeListDtos = new ArrayList<>();
 
         for (Personaje personaje : personajes) {

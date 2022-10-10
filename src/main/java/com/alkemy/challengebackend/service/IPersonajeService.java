@@ -17,6 +17,7 @@ public interface IPersonajeService {
 
     public List<PersonajeListDto> listPersonaje();
 
-    public List<PersonajeListDto> findByNombrePersonaje(String nombre);
+    public List<PersonajeListDto> filtrarPersonajes(String nombre, Integer edad,
+                                                    Double peso, Long id);
 
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/characters")
+@RequestMapping(value = "/characters")
 public class PersonajesController {
 
     @Autowired
@@ -38,17 +38,18 @@ public class PersonajesController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PersonajeListDto>> listCharactersByFilter(@RequestParam String name){
-        if(name.isBlank()|| name.isEmpty()){
+    public ResponseEntity<List<PersonajeListDto>> listCharactersByFilter(@RequestParam(required = false) String name,
+                                                                         @RequestParam(required = false) Integer age,
+                                                                         @RequestParam(required = false) Double weight,
+                                                                         @RequestParam(required = false) Long moviesId){
+        if(name == null && age==null && weight==null && moviesId==null){
             return new ResponseEntity(personajeService.listPersonaje(), HttpStatus.OK);
         }
-        return new ResponseEntity(personajeService.findByNombrePersonaje(name), HttpStatus.OK);
+
+        return new ResponseEntity(personajeService.filtrarPersonajes(name, age, weight, moviesId), HttpStatus.OK);
+
     }
 
-    @GetMapping("/characters")
-    public ResponseEntity<List<PersonajeListDto>> listCharacters(){
-            return new ResponseEntity(personajeService.listPersonaje(), HttpStatus.OK);
-     }
 
 
 }
