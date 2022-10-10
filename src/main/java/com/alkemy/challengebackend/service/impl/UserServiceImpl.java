@@ -3,6 +3,7 @@ package com.alkemy.challengebackend.service.impl;
 import com.alkemy.challengebackend.model.User;
 import com.alkemy.challengebackend.model.dto.UserDTO;
 import com.alkemy.challengebackend.repository.IUserRepository;
+import com.alkemy.challengebackend.service.IEmailSenderService;
 import com.alkemy.challengebackend.service.IUserService;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,14 +30,18 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository userRepository;
 
     @Autowired
+    private IEmailSenderService emailSenderService;
+
+    @Autowired
     private ModelMapper mapper;
 
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserDTO createUser(UserDTO userDTO) throws IOException {
         User user = userRepository.save(mapper.map(userDTO, User.class));
         if (user!= null){
             UserDTO userDTO1 = mapper.map(user, UserDTO.class);
+            emailSenderService.sendEmail(userDTO1.getEmail());
             return userDTO1;
         }
         logger.error("The user {} couldn't be created successfully", userDTO.getName());
